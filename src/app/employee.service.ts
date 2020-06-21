@@ -15,11 +15,6 @@ export class EmployeeService {
     return this.http.post("http://localhost:3333/employee", funcionario);
   }
 
-  adicionarMedico(medico: DoctorModel, funcionario): Observable<any>{
-    console.log("codigo funcionario", funcionario.insertId);
-    return this.http.post('http://localhost:3333/employee/'+ funcionario.insertId + '/doctor', medico);
-  }
-
   editarFuncionario(Cod_Funcionario): Observable<any>{
     return this.http.get("http://localhost:3333/employee/" + Cod_Funcionario);
   }
@@ -28,12 +23,24 @@ export class EmployeeService {
     return this.http.patch("http://localhost:3333/employee/" + funcionario.Cod_Funcionario, funcionario);
   }
 
-  editarMedico(Cod_Funcionario): Observable<any>{
-    return this.http.get("http://localhost:3333/doctor/" + Cod_Funcionario);
+  deletarFuncionario(Cod_Funcionario): Observable<any>{
+    return this.http.delete('http://localhost:3333/employee/'+ Cod_Funcionario);
   }
 
   listarFuncionarios(): Observable<any>{
     return this.http.get("http://localhost:3333/employee");
+  }
+
+  adicionarMedico(medico: DoctorModel, funcionario): Observable<any>{
+    return this.http.post('http://localhost:3333/employee/'+ funcionario.insertId + '/doctor', medico);
+  }
+
+  editarMedico(Cod_Funcionario): Observable<any>{
+    return this.http.get("http://localhost:3333/doctor/" + Cod_Funcionario);
+  }
+
+  atualizarMedico(medico): Observable<any>{
+    return this.http.patch("http://localhost:3333/doctor/" + medico.Cod_Funcionario, medico);
   }
 
   listarSetores(): Observable<any>{

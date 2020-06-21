@@ -124,8 +124,8 @@ function tabelaLocation(connection){
 function tabelaDoctor(connection){
 
   const sql = "CREATE TABLE IF NOT EXISTS Doctor (\n"+
-  "CRM varchar(255) NOT NULL,\n"+
-  "Especialidade int NOT NULL,\n"+
+  "CRM int NOT NULL,\n"+
+  "Especialidade varchar(255) NOT NULL,\n"+
   "Cod_Funcionario int NOT NULL,\n"+
   "PRIMARY KEY (CRM),\n"+
   "UNIQUE KEY CRM (CRM),\n"+

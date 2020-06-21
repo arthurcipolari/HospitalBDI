@@ -37,11 +37,12 @@ export class EmployeeComponent implements OnInit {
       this.funcionario.Medico = 0;
     }
     this.employeeService.adicionarFuncionario(this.funcionario).subscribe(funcionario => {
-      if(this.funcionario.Medico){
+      if(this.funcionario.Medico == 1){
         this.employeeService.adicionarMedico(this.medico, funcionario).subscribe(medico => {
           this.medico = new DoctorModel();
         }, err => {
           console.log('Erro ao cadastrar médico', err);
+          alert('Erro ao cadastrar médico');
         })
       }
       this.funcionario = new EmployeeModel();
@@ -49,6 +50,7 @@ export class EmployeeComponent implements OnInit {
       this.AddFuncionario = false;
     }, err => {
       console.log('Erro ao cadastrar funcionário', err);
+      alert('Erro ao cadastrar funcionário');
     })
 
   }
@@ -59,9 +61,7 @@ export class EmployeeComponent implements OnInit {
       function getSetorByFind(nome){
         return setores.find(x => x.Nome_Setor === nome);
       }
-      this.setorMedico = getSetorByFind('Medico');
-      console.log('setor', this.setorMedico);
-      console.log(this.setores);
+      this.setorMedico = getSetorByFind('Médico');
     }, err =>{
       console.log('Erro ao listar setores', err);
     })
@@ -81,11 +81,13 @@ export class EmployeeComponent implements OnInit {
       this.funcionario = funcionario[0];
       this.data = this.datepipe.transform (new Date(this.funcionario.Data_Admissao), 'yyyy-MM-dd');
       console.log("funcionario", this.funcionario);
-      if(funcionario.Medico){
+      if(this.funcionario.Medico){
         this.employeeService.editarMedico(Cod_Funcionario).subscribe(medico => {
           this.medico = medico[0];
-          console.log("medico", this.medico);
-        })
+          console.log("get medico", this.medico);
+        }), err =>{
+          console.log('Erro ao editar médico', err);
+        }
       }
     }), err =>{
       console.log('Erro ao editar usuário', err);
@@ -98,21 +100,24 @@ export class EmployeeComponent implements OnInit {
     }else{
       this.funcionario.Medico = 0;
     }
-    console.log(this.funcionario);
     this.employeeService.atualizarFuncionario(this.funcionario).subscribe( res => {
-      this.listarFuncionarios();
-      if(this.funcionario.Medico){
-        console.log('medico update');
-       // this.employeeService.adicionarMedico(this.medico, funcionario).subscribe(medico => {
-       //   this.medico = new DoctorModel();
-       // }, err => {
-       //   console.log('Erro ao cadastrar médico', err);
-       // })
+      console.log("funcionao", this.funcionario);
+      if(this.funcionario.Medico == 1){
+        console.log('patch medico', this.medico);
+        this.employeeService.atualizarMedico(this.medico).subscribe(medico => {
+          this.medico = new DoctorModel();
+        }, err => {
+          console.log('Erro ao atualizar médico', err);
+          alert('Erro ao atualizar médico!');
+        })
       }
-    })
-    this.EditandoFuncionario = !this.EditandoFuncionario;
-    this.funcionario = new EmployeeModel();
-    this.medico = new DoctorModel();
+      this.EditandoFuncionario = !this.EditandoFuncionario;
+      this.funcionario = new EmployeeModel();
+      this.listarFuncionarios();
+    }), err =>{
+      console.log('Erro ao atualizar funcionário', err);
+      alert('Erro ao atualizar funcionário!');
+    }
   }
 
   cancelarEdicao(){
@@ -121,17 +126,16 @@ export class EmployeeComponent implements OnInit {
     this.medico = new DoctorModel();
   }
 
-
-
   removerFuncionario(Cod_Funcionario){
-
-    this.listarFuncionarios();
+    this.employeeService.deletarFuncionario(Cod_Funcionario).subscribe( res => {
+      this.listarFuncionarios();
+    })
+    alert("Usuário removido!");    
   }
 
-
   toggleFuncionario() {
+    this.funcionario = new EmployeeModel();
     this.AddFuncionario = !this.AddFuncionario;
-    console.log(this.funcionario);
   }
 
 }

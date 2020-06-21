@@ -123,18 +123,8 @@ router.post('/employee', (req, res) =>{
     var Data_Admissao = new Date().toISOString().replace(/\T.+/, '');
   }
   const Cod_Setor = req.body.Cod_Setor;
-  if(req.body.Medico){
-    var Medico = 1;
-  }else{
-    var Medico = 0;
-  }
-  
-
+  const Medico = req.body.Medico;
   execSQLQuery(`INSERT INTO Employee(Nome, Data_Admissao, Cod_Setor, Medico) VALUES('${Nome}','${Data_Admissao}','${Cod_Setor}','${Medico}')`, res);
-  console.log(res);
-  if(Medico){
-    console.log('criar medico');
-  }
 });
 // rota para atualizar um funcionario
 router.patch('/employee/:Cod_Funcionario', (req, res) =>{
@@ -143,12 +133,29 @@ router.patch('/employee/:Cod_Funcionario', (req, res) =>{
   const Cod_Setor = req.body.Cod_Setor;
   const Medico = req.body.Medico;
   execSQLQuery(`UPDATE Employee SET Nome='${Nome}', Cod_Setor='${Cod_Setor}', Medico='${Medico}' WHERE Cod_Funcionario=${Cod_Funcionario}`, res);
-  if(Medico){
-    console.log('edit medico');
-  }
 })
-
-//rota teste funcionario com setor
+//rota get funcionario com setor
 router.get('/employee/:Cod_Funcionario/sector', (req, res) =>{
   execSQLQuery('SELECT * FROM Employee e JOIN Sector s ON e.Cod_Setor = s.Cod_Setor WHERE e.Cod_Funcionario=' + parseInt(req.params.Cod_Funcionario), res);
+})
+
+//rota cria medico
+router.post('/employee/:Cod_Funcionario/doctor', (req, res) =>{
+  const CRM = req.body.CRM;
+  const Especialidade = req.body.Especialidade.substring(0,254);
+  const Cod_Funcionario = parseInt(req.params.Cod_Funcionario);
+  execSQLQuery(`INSERT INTO Doctor(CRM, Especialidade, Cod_Funcionario) VALUES('${CRM}','${Especialidade}','${Cod_Funcionario}')`, res);
+})
+// rota para listar medico por id
+router.get('/doctor/:Cod_Funcionario?', (req, res) =>{
+  let filter = '';
+  if(req.params.Cod_Funcionario) filter = ' WHERE Cod_Funcionario=' + parseInt(req.params.Cod_Funcionario);
+  execSQLQuery('SELECT * FROM Doctor' + filter, res);
+})
+// rota para atualizar um medico
+router.patch('/doctor/:Cod_Funcionario', (req, res) =>{
+  const CRM = req.body.CRM;
+  const Especialidade = req.body.Especialidade.substring(0,254);
+  const Cod_Funcionario = parseInt(req.params.Cod_Funcionario);
+  execSQLQuery(`UPDATE Doctor SET CRM='${CRM}', Especialidade='${Especialidade}' WHERE Cod_Funcionario=${Cod_Funcionario}`, res);
 })
