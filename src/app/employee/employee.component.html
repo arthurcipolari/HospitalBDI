@@ -1,0 +1,162 @@
+<div class="main-content" >
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card" *ngIf="!EditandoFuncionario">
+                    <div class="content">
+                            <h4 (click)="toggleFuncionario()" class="title">Adicionar Funcionário
+                                <i style="float:right; font-weight:bold; color: green;" class="pe-7s-plus"></i></h4>
+                    </div>
+                    <div class="content" *ngIf="AddFuncionario">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Nome</label>
+                                        <input type="text" name="Nome" class="form-control" placeholder="Nome" [(ngModel)]="funcionario.Nome">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Data Admissão</label>
+                                        <input type="date" name="Data_Admissao" class="form-control" placeholder="dd/mm/aaaa" [(ngModel)]="funcionario.Data_Admissao">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Setor</label>
+                                        <select class="form-control" name="Cod_Setor" placeholder="Selecione o setor..." value="" [(ngModel)]="funcionario.Cod_Setor"> 
+                                        <option *ngFor="let setor of setores" value="{{setor.Cod_Setor}}">{{setor.Nome_Setor}}</option>
+                                        </select>    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-check">
+                                        <span>O funcionário é médico? </span>
+                                        <input type="checkbox"  (click)="toggleMedico()" class="form-check-input" [checked]="funcionario.Medico" [(ngModel)]="funcionario.Medico" name="Medico">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="Medico">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>CRM</label>
+                                        <input type="number" name="CRM" class="form-control" placeholder="CRM" [(ngModel)]="medico.CRM">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Especialidade</label>
+                                        <input type="text" name="Especialidade" class="form-control" placeholder="Especialidade" [(ngModel)]="medico.Especialidade">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" (click)="adicionarFuncionario()" class="btn btn-info btn-fill pull-right">Adicionar Funcionario</button>
+                            <div class="clearfix"></div>
+                        </form>
+
+                    </div>
+                </div>
+                    <div class="card" *ngIf="EditandoFuncionario">
+                        <div class="content">
+                                <h4 (click)="cancelarEdicao()" class="title"><i style="float: left; font-weight:bold; color: blue;" class="pe-7s-back"></i>   Editar Funcionário</h4>
+                        </div>
+                        <div class="content">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>Código Funcionário</label>
+                                        <input disabled type="number" name="Cod_Funcionario" class="form-control" placeholder="" [(ngModel)]="funcionario.Cod_Funcionario">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Nome</label>
+                                            <input type="text" name="Nome" class="form-control" placeholder="Nome" [(ngModel)]="funcionario.Nome">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Data Admissão</label>
+                                            <input disabled type="date" name="Data_Admissao" class="form-control" placeholder="dd/mm/aaaa" [(ngModel)]="this.data">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Setor</label>
+                                            <select class="form-control" name="Cod_Setor" placeholder="Selecione o setor..." value="" [(ngModel)]="funcionario.Cod_Setor"> 
+                                            <option *ngFor="let setor of setores" value="{{setor.Cod_Setor}}">{{setor.Nome_Setor}}</option>
+                                            </select>    
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-check">
+                                            <span>O funcionário é médico? </span>
+                                            <input type="checkbox"  (click)="toggleMedico()" class="form-check-input" [(ngModel)]="funcionario.Medico" name="Medico">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="Medico">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>CRM</label>
+                                            <input type="number" name="CRM" class="form-control" placeholder="CRM" [(ngModel)]="medico.CRM">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Especialidade</label>
+                                            <input type="text" name="Especialidade" class="form-control" placeholder="Especialidade" [(ngModel)]="medico.Especialidade">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" (click)="atualizarFuncionario()" class="btn btn-info btn-fill pull-right">Atualizar Funcionario</button>
+                                <div class="clearfix"></div>
+                            </form>
+    
+                        </div>
+                    </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Funcionários</h4>
+                        <p class="category">Listagem dos funcionários do hospital</p>
+                    </div>
+                    <div class="content table-responsive table-full-width">
+                          <table class="table table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Nome</th>
+                                        <th>Data Admissão</th>
+                                        <th>Setor</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let funcionario of funcionarios">
+                                        <td>{{funcionario.Cod_Funcionario}}</td>
+                                        <td>{{funcionario.Nome}}</td>
+                                        <td>{{funcionario.Data_Admissao | date:'dd/MM/yyyy' }}</td>
+                                        <td>{{setores[funcionario.Cod_Setor-1].Nome_Setor}}</td>
+                                        <td>
+                                            <span (click)="editarFuncionario(funcionario.Cod_Funcionario)"><i style="font-weight:bold; color: blue;" class="pe-7s-edit"></i></span>
+                                            <span (click)="removerFuncionario(funcionario.Cod_Funcionario)"><i style="padding-left: 15px; font-weight:bold; color: red;" class="pe-7s-trash"></i></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                          </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
