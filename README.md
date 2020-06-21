@@ -2,7 +2,7 @@
 
 1. Install MySQL Server
 2. Install NodeJs from https://nodejs.org/en
-3. Create a schema on MySQL
+3. Create a schema on MySQL ( Use 'HospitalMysql' or change database name on create-table.js )
 4. Go to API folder
 4. Open Terminal
 5. IF FIRST TIME > Run: ```node create-table.js```
