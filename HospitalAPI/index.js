@@ -140,12 +140,11 @@ router.post('/employee', (req, res) =>{
 router.patch('/employee/:Cod_Funcionario', (req, res) =>{
   const Cod_Funcionario = parseInt(req.params.Cod_Funcionario);
   const Nome = req.body.Nome.substring(0,254);
-  const Data_Admissao = new Date();
   const Cod_Setor = req.body.Cod_Setor;
   const Medico = req.body.Medico;
-  execSQLQuery(`UPDATE Employee SET Nome='${Nome}', Data_Admissao='${Data_Admissao}', Cod_Setor='${Cod_Setor}', Data_Admissao='${Medico}' WHERE Cod_Funcionario=${Cod_Funcionario}`, res);
+  execSQLQuery(`UPDATE Employee SET Nome='${Nome}', Cod_Setor='${Cod_Setor}', Medico='${Medico}' WHERE Cod_Funcionario=${Cod_Funcionario}`, res);
   if(Medico){
-    console.log('criar medico');
+    console.log('edit medico');
   }
 })
 

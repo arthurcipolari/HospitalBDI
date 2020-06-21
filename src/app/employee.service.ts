@@ -24,6 +24,10 @@ export class EmployeeService {
     return this.http.get("http://localhost:3333/employee/" + Cod_Funcionario);
   }
 
+  atualizarFuncionario(funcionario): Observable<any>{
+    return this.http.patch("http://localhost:3333/employee/" + funcionario.Cod_Funcionario, funcionario);
+  }
+
   editarMedico(Cod_Funcionario): Observable<any>{
     return this.http.get("http://localhost:3333/doctor/" + Cod_Funcionario);
   }

@@ -33,15 +33,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-check">
                                         <span>O funcionário é médico? </span>
                                         <input type="checkbox"  (click)="toggleMedico()" class="form-check-input" [checked]="funcionario.Medico" [(ngModel)]="funcionario.Medico" name="Medico">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row" *ngIf="Medico">
+                            </div> -->
+                            <div class="row" *ngIf="funcionario.Cod_Setor == setorMedico.Cod_Setor">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>CRM</label>
@@ -95,15 +95,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-check">
                                             <span>O funcionário é médico? </span>
                                             <input type="checkbox"  (click)="toggleMedico()" class="form-check-input" [(ngModel)]="funcionario.Medico" name="Medico">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row" *ngIf="Medico">
+                                </div> -->
+                                <div class="row" *ngIf="funcionario.Cod_Setor == setorMedico.Cod_Setor">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>CRM</label>
