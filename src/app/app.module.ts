@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { EmployeeComponent } from './employee/employee.component';
+import { LoginComponent } from './login/login.component';
 
 import { EmployeeService } from './employee.service';
 
@@ -31,7 +32,8 @@ import { EmployeeService } from './employee.service';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    EmployeeComponent
+    EmployeeComponent,
+    LoginComponent
   ],
   providers: [HttpClientModule, DatePipe, EmployeeService],
   bootstrap: [AppComponent]

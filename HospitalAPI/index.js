@@ -139,6 +139,12 @@ router.get('/employee/:Cod_Funcionario/sector', (req, res) =>{
   execSQLQuery('SELECT * FROM Employee e JOIN Sector s ON e.Cod_Setor = s.Cod_Setor WHERE e.Cod_Funcionario=' + parseInt(req.params.Cod_Funcionario), res);
 })
 
+//rota get todos funcionario com setor
+router.get('/hospital/:Cod_Hospital/employee', (req, res) =>{
+  const Cod_Hospital = parseInt(req.params.Cod_Hospital);
+  execSQLQuery('SELECT * FROM Employee e JOIN Sector s ON e.Cod_Setor = s.Cod_Setor WHERE s.Cod_Hospital='+ Cod_Hospital, res);
+})
+
 //rota cria medico
 router.post('/employee/:Cod_Funcionario/doctor', (req, res) =>{
   const CRM = req.body.CRM;

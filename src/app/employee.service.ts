@@ -31,6 +31,11 @@ export class EmployeeService {
     return this.http.get("http://localhost:3333/employee");
   }
 
+  listarFuncionariosHospital(Cod_Hospital1): Observable<any>{
+    const Cod_Hospital = "1";
+    return this.http.get("http://localhost:3333/hospital/" + Cod_Hospital + "/employee");
+  }
+
   adicionarMedico(medico: DoctorModel, funcionario): Observable<any>{
     return this.http.post('http://localhost:3333/employee/'+ funcionario.insertId + '/doctor', medico);
   }
