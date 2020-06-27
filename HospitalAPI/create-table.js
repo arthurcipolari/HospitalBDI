@@ -3,7 +3,7 @@ const connection = mysql.createConnection({
   host     : 'localhost',
   port     : 3306,
   user     : 'root',
-  password : 'password',
+  password : '',
   database : 'HospitalMysql'
 });
 
@@ -193,6 +193,25 @@ function tabelaHospitalization(connection){
   createTable(connection, sql, msg);
 }
 
+function triggerHospitalization(connection){
+
+  const sql = "CREATE TRIGGER `hospitalization_AFTER_INSERT` AFTER INSERT ON `hospitalization` FOR EACH ROW\n"+
+   "BEGIN UPDATE room SET Em_Uso = 1 WHERE room.Cod_Quarto = new.Cod_Quarto; END";
+
+  connection.query(sql, function (error, results, fields){
+    if(error) return console.log(error);
+    console.log('trigger after insert hospitalization criado!');
+  });
+
+  const sql2 = "CREATE TRIGGER `hospitalization_AFTER_UPDATE` AFTER UPDATE ON `hospitalization` FOR EACH ROW\n"+
+  "BEGIN IF NEW.Data_Alta IS NOT NULL THEN UPDATE room SET Em_Uso = 0 WHERE room.Cod_Quarto = old.Cod_Quarto; END IF; END";
+
+  connection.query(sql2, function (error, results, fields){
+    if(error) return console.log(error);
+    console.log('trigger after update hospitalization criado!');
+  });
+}
+
 
 // function addRows(conn){
 //     const sql = "INSERT INTO Clientes(Nome,CPF) VALUES ?";
@@ -212,6 +231,7 @@ connection.connect(function(err){
     if(err) return console.log(err);
     console.log('conectou!');
 
+    //criando tabelas
     tabelaHospital(connection);
     tabelaSector(connection);
     tabelaEmployee(connection);
@@ -224,4 +244,9 @@ connection.connect(function(err){
     tabelaReservation(connection);
     tabelaHospitalization(connection);
 
+
+    //criando triggers
+    triggerHospitalization(connection);
+
+    connection.end();
   })
