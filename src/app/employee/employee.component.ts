@@ -89,14 +89,10 @@ export class EmployeeComponent implements OnInit {
       this.data = this.datepipe.transform (new Date(this.funcionario.Data_Admissao), 'yyyy-MM-dd');
       console.log('funcionario', this.funcionario);
       if (this.funcionario.Medico) {
-        this.employeeService.editarMedico(Cod_Funcionario).subscribe(medico => {
-          this.medico = medico[0];
-          console.log('get medico', this.medico);
-        // tslint:disable-next-line: no-unused-expression
-        }), err => {
-          console.log('Erro ao editar médico', err);
+        this.medico.CRM = funcionario[0].CRM;
+        this.medico.Especialidade = funcionario[0].Especialidade;
+        this.medico.Cod_Funcionario = funcionario[0].Cod_Funcionario;
         }
-      }
     // tslint:disable-next-line: no-unused-expression
     }), err => {
       console.log('Erro ao editar usuário', err);
@@ -111,10 +107,11 @@ export class EmployeeComponent implements OnInit {
     }
     this.employeeService.atualizarFuncionario(this.funcionario).subscribe( res => {
       console.log('funcionario', this.funcionario);
-      if(this.funcionario.Medico === 1) {
+      if (this.funcionario.Medico === 1) {
         console.log('patch medico', this.medico);
         this.employeeService.atualizarMedico(this.medico).subscribe(medico => {
           this.medico = new DoctorModel();
+          this.listarFuncionarios();
         }, err => {
           console.log('Erro ao atualizar médico', err);
           alert('Erro ao atualizar médico!');

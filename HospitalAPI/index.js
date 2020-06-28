@@ -105,10 +105,8 @@ router.get('/employee', (req, res) =>{
   execSQLQuery('SELECT * FROM Employee', res);
 })
 // rota para listar funcionario por id
-router.get('/employee/:Cod_Funcionario?', (req, res) =>{
-  let filter = '';
-  if(req.params.Cod_Funcionario) filter = ' WHERE Cod_Funcionario=' + parseInt(req.params.Cod_Funcionario);
-  execSQLQuery('SELECT * FROM Employee' + filter, res);
+router.get('/employee/:Cod_Funcionario', (req, res) =>{
+  execSQLQuery('SELECT e.Cod_Funcionario, e.Nome, e.Data_Admissao, e.Medico, e.Cod_Setor, d.CRM, d.Especialidade FROM Employee e JOIN Sector s ON e.Cod_Setor = s.Cod_Setor LEFT JOIN Doctor d ON e.Cod_Funcionario = d.Cod_Funcionario WHERE e.Cod_Funcionario =' + parseInt(req.params.Cod_Funcionario), res);
 })
 // rota para deletar um funcionario por id
 router.delete('/employee/:Cod_Funcionario', (req, res) =>{
