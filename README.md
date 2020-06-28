@@ -3,7 +3,7 @@
 1. Install MySQL Server
 2. Install NodeJs from https://nodejs.org/en
 3. Create a schema on MySQL ( Use 'HospitalMysql' or change database name on scripts pages )
-4. Insert your MySQL user and password on script pages 
+4. Insert your MySQL user and password on script pages ( For MySQL 8.0 must use legacy authentication for new method use empty password ONLY )
 5. Go to HospitalAPI folder
 6. Open Terminal
 7. To create tables (if first time running) run: ```node create-table.js```

@@ -181,7 +181,7 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.deletarFuncionario(Cod_Funcionario).subscribe( res => {
       this.listarFuncionarios();
     })
-    this.showDangerNotification('Usuário removido!');
+    this.showDangerNotification('Funcionário removido!');
   }
 
   toggleFuncionario() {
