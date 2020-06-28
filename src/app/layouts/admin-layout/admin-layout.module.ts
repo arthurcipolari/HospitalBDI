@@ -16,6 +16,7 @@ import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
+import { LocalStorageService } from 'app/local-storage.service';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent
-  ]
+  ],
+  providers: [LocalStorageService],
 })
 
 export class AdminLayoutModule {}

@@ -35,6 +35,10 @@ export class EmployeeService {
     return this.http.post('http://localhost:3333/employee/' + funcionario.insertId + '/doctor', medico);
   }
 
+  fixMedico(medico: DoctorModel, funcionario): Observable<any> {
+    return this.http.post('http://localhost:3333/employee/' + funcionario.Cod_Funcionario + '/doctor', medico);
+  }
+
   editarMedico(Cod_Funcionario): Observable<any> {
     return this.http.get('http://localhost:3333/doctor/' + Cod_Funcionario);
   }

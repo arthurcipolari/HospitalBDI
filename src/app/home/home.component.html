@@ -3,8 +3,20 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="content" style="min-height: 30vh;">
-                        <span>Selecione o Hospital</span>
+                    <div class="content">
+                        <div class="header">
+                            <h3>Hospital Selecionado: <i style="font-weight:bold; color: red;" class="pe-7s-home"></i> {{nomeHospital}}</h3>
+                        </div>
+                        <form>
+                        <div class="form-group">
+                            <label>Selecione o Hospital</label>
+                            <select class="form-control" name="Cod_Hospital" placeholder="Selecione o hospital..." value="" [(ngModel)]="selectedHospital"> 
+                            <option *ngFor="let hospital of hospitais" value="{{hospital.Cod_Hospital}}">{{hospital.Nome}}</option>
+                            </select>
+                            <button type="submit" (click)="selecionarHospital()" class="btn btn-info btn-fill pull-right" style="margin-top: 15px;">Selecionar Hospital</button> 
+                            <div class="clearfix"></div> 
+                        </div>
+                    </form>
                     </div>
                 </div>
                 

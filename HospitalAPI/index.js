@@ -138,7 +138,7 @@ router.get('/employee/:Cod_Funcionario/sector', (req, res) =>{
 })
 //rota lista funcionario com info medico e setor
 router.get('/hospital/:Cod_Hospital/employee', (req, res) => {
-  execSQLQuery('SELECT e.Cod_Funcionario, e.Nome, e.Data_Admissao, e.Cod_Setor, d.CRM, d.Especialidade FROM Employee e JOIN Sector s ON e.Cod_Setor = s.Cod_Setor LEFT JOIN Doctor d ON e.Cod_Funcionario = d.Cod_Funcionario WHERE Cod_Hospital =' + parseInt(req.params.Cod_Hospital) + ' ORDER BY e.Nome', res);
+  execSQLQuery('SELECT e.Cod_Funcionario, e.Nome, e.Data_Admissao, e.Cod_Setor, d.CRM, d.Especialidade, s.Nome_Setor FROM Employee e JOIN Sector s ON e.Cod_Setor = s.Cod_Setor LEFT JOIN Doctor d ON e.Cod_Funcionario = d.Cod_Funcionario WHERE Cod_Hospital =' + parseInt(req.params.Cod_Hospital) + ' ORDER BY e.Nome', res);
 })
 
 //rota cria medico

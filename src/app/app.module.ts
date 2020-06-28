@@ -16,6 +16,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { EmployeeComponent } from './employee/employee.component';
 
 import { EmployeeService } from './employee.service';
+import { LocalStorageService } from './local-storage.service';
 
 @NgModule({
   imports: [
@@ -33,7 +34,7 @@ import { EmployeeService } from './employee.service';
     AdminLayoutComponent,
     EmployeeComponent
   ],
-  providers: [HttpClientModule, DatePipe, EmployeeService],
+  providers: [HttpClientModule, DatePipe, EmployeeService, LocalStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
