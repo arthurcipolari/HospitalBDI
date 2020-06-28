@@ -11,40 +11,44 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
-  adicionarFuncionario(funcionario: EmployeeModel): Observable<any>{
-    return this.http.post("http://localhost:3333/employee", funcionario);
+  adicionarFuncionario(funcionario: EmployeeModel): Observable<any> {
+    return this.http.post('http://localhost:3333/employee', funcionario);
   }
 
-  editarFuncionario(Cod_Funcionario): Observable<any>{
-    return this.http.get("http://localhost:3333/employee/" + Cod_Funcionario);
+  editarFuncionario(Cod_Funcionario): Observable<any> {
+    return this.http.get('http://localhost:3333/employee/' + Cod_Funcionario);
   }
 
-  atualizarFuncionario(funcionario): Observable<any>{
-    return this.http.patch("http://localhost:3333/employee/" + funcionario.Cod_Funcionario, funcionario);
+  atualizarFuncionario(funcionario): Observable<any> {
+    return this.http.patch('http://localhost:3333/employee/' + funcionario.Cod_Funcionario, funcionario);
   }
 
-  deletarFuncionario(Cod_Funcionario): Observable<any>{
-    return this.http.delete('http://localhost:3333/employee/'+ Cod_Funcionario);
+  deletarFuncionario(Cod_Funcionario): Observable<any> {
+    return this.http.delete('http://localhost:3333/employee/' + Cod_Funcionario);
   }
 
-  listarFuncionarios(): Observable<any>{
-    return this.http.get("http://localhost:3333/employee");
+  listarFuncionarios(): Observable<any> {
+    return this.http.get('http://localhost:3333/employee');
   }
 
-  adicionarMedico(medico: DoctorModel, funcionario): Observable<any>{
-    return this.http.post('http://localhost:3333/employee/'+ funcionario.insertId + '/doctor', medico);
+  adicionarMedico(medico: DoctorModel, funcionario): Observable<any> {
+    return this.http.post('http://localhost:3333/employee/' + funcionario.insertId + '/doctor', medico);
   }
 
-  editarMedico(Cod_Funcionario): Observable<any>{
-    return this.http.get("http://localhost:3333/doctor/" + Cod_Funcionario);
+  editarMedico(Cod_Funcionario): Observable<any> {
+    return this.http.get('http://localhost:3333/doctor/' + Cod_Funcionario);
   }
 
-  atualizarMedico(medico): Observable<any>{
-    return this.http.patch("http://localhost:3333/doctor/" + medico.Cod_Funcionario, medico);
+  atualizarMedico(medico): Observable<any> {
+    return this.http.patch('http://localhost:3333/doctor/' + medico.Cod_Funcionario, medico);
   }
 
-  listarSetores(): Observable<any>{
-    const Cod_Hospital = "1";
-    return this.http.get('http://localhost:3333/hospital/'+Cod_Hospital +'/sector');
+  listarSetores(Cod_Hospital): Observable<any> {
+    return this.http.get('http://localhost:3333/hospital/' + Cod_Hospital + '/sector');
   }
+
+  listarFuncionarioHospital(Cod_Hospital): Observable<any> {
+  return this.http.get('http://localhost:3333/hospital/' + Cod_Hospital + '/employee');
+  }
+
 }

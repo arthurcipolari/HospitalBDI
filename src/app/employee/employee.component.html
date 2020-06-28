@@ -138,6 +138,8 @@
                                         <th>Nome</th>
                                         <th>Data Admissão</th>
                                         <th>Setor</th>
+                                        <th>CRM</th>
+                                        <th>Especialidade</th>
                                         <th>Ações</th>
                                     </tr>
                                 </thead>
@@ -147,6 +149,8 @@
                                         <td>{{funcionario.Nome}}</td>
                                         <td>{{funcionario.Data_Admissao | date:'dd/MM/yyyy' }}</td>
                                         <td>{{setores[funcionario.Cod_Setor-1].Nome_Setor}}</td>
+                                        <td>{{funcionario.CRM}}</td>
+                                        <td>{{funcionario.Especialidade}}</td>
                                         <td>
                                             <span (click)="editarFuncionario(funcionario.Cod_Funcionario)"><i style="font-weight:bold; color: blue;" class="pe-7s-edit"></i></span>
                                             <span (click)="removerFuncionario(funcionario.Cod_Funcionario)"><i style="padding-left: 15px; font-weight:bold; color: red;" class="pe-7s-trash"></i></span>

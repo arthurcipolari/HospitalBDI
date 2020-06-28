@@ -13,7 +13,7 @@ function execSQLQuery(sqlQry, res){
       host     : 'localhost',
       port     : 3306,
       user     : 'root',
-      password : 'password',
+      password : '',
       database : 'HospitalMysql'
     });
   
@@ -137,6 +137,10 @@ router.patch('/employee/:Cod_Funcionario', (req, res) =>{
 //rota get funcionario com setor
 router.get('/employee/:Cod_Funcionario/sector', (req, res) =>{
   execSQLQuery('SELECT * FROM Employee e JOIN Sector s ON e.Cod_Setor = s.Cod_Setor WHERE e.Cod_Funcionario=' + parseInt(req.params.Cod_Funcionario), res);
+})
+//rota lista funcionario com info medico e setor
+router.get('/hospital/:Cod_Hospital/employee', (req, res) => {
+  execSQLQuery('SELECT e.Cod_Funcionario, e.Nome, e.Data_Admissao, e.Cod_Setor, d.CRM, d.Especialidade FROM Employee e JOIN Sector s ON e.Cod_Setor = s.Cod_Setor LEFT JOIN Doctor d ON e.Cod_Funcionario = d.Cod_Funcionario WHERE Cod_Hospital =' + parseInt(req.params.Cod_Hospital) + ' ORDER BY e.Nome', res);
 })
 
 //rota cria medico

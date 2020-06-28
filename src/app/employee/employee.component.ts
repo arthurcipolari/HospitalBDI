@@ -12,8 +12,6 @@ import { DatePipe } from '@angular/common';
 })
 export class EmployeeComponent implements OnInit {
 
-  constructor(private employeeService: EmployeeService, public datepipe: DatePipe) { }
-
   public funcionario: EmployeeModel = new EmployeeModel;
   editFuncionario: EmployeeModel = new EmployeeModel;
   medico: DoctorModel = new DoctorModel;
@@ -25,19 +23,23 @@ export class EmployeeComponent implements OnInit {
   AddFuncionario = false;
   EditandoFuncionario = false;
 
+  constructor(private employeeService: EmployeeService, public datepipe: DatePipe) { }
+
   ngOnInit(): void {
     this.listarSetores();
     this.listarFuncionarios();
   }
 
-  adicionarFuncionario(){
-    if(this.funcionario.Cod_Setor == this.setorMedico.Cod_Setor){
+  adicionarFuncionario() {
+    if (this.funcionario.Cod_Setor == this.setorMedico.Cod_Setor) {
+      console.log('medico', this.funcionario, this.setorMedico);
       this.funcionario.Medico = 1;
-    }else{
+    } else {
+      console.log('not medico', this.funcionario, this.setorMedico);
       this.funcionario.Medico = 0;
     }
     this.employeeService.adicionarFuncionario(this.funcionario).subscribe(funcionario => {
-      if(this.funcionario.Medico == 1){
+      if (this.funcionario.Medico === 1) {
         this.employeeService.adicionarMedico(this.medico, funcionario).subscribe(medico => {
           this.medico = new DoctorModel();
         }, err => {
@@ -56,53 +58,60 @@ export class EmployeeComponent implements OnInit {
   }
 
   listarSetores() {
-    this.employeeService.listarSetores().subscribe(setores =>{
+    const codHosp = '1';
+    this.employeeService.listarSetores(codHosp).subscribe(setores => {
+      console.log(setores);
       this.setores = setores;
-      function getSetorByFind(nome){
+      function getSetorByFind(nome) {
         return setores.find(x => x.Nome_Setor === nome);
       }
       this.setorMedico = getSetorByFind('Médico');
-    }, err =>{
+      console.log(this.setorMedico);
+    }, err => {
       console.log('Erro ao listar setores', err);
     })
   }
 
   listarFuncionarios() {
-    this.employeeService.listarFuncionarios().subscribe(funcionarios =>{
+    const codHosp = '1';
+    this.employeeService.listarFuncionarioHospital(codHosp).subscribe(funcionarios => {
       this.funcionarios = funcionarios;
+      console.log(this.funcionarios);
     }, err => {
       console.log('Erro ao listar funcionarios', err);
     })
   }
 
-  editarFuncionario(Cod_Funcionario){
+  editarFuncionario(Cod_Funcionario) {
     this.EditandoFuncionario = true;
     this.employeeService.editarFuncionario(Cod_Funcionario).subscribe(funcionario => {
       this.funcionario = funcionario[0];
       this.data = this.datepipe.transform (new Date(this.funcionario.Data_Admissao), 'yyyy-MM-dd');
-      console.log("funcionario", this.funcionario);
-      if(this.funcionario.Medico){
+      console.log('funcionario', this.funcionario);
+      if (this.funcionario.Medico) {
         this.employeeService.editarMedico(Cod_Funcionario).subscribe(medico => {
           this.medico = medico[0];
-          console.log("get medico", this.medico);
-        }), err =>{
+          console.log('get medico', this.medico);
+        // tslint:disable-next-line: no-unused-expression
+        }), err => {
           console.log('Erro ao editar médico', err);
         }
       }
-    }), err =>{
+    // tslint:disable-next-line: no-unused-expression
+    }), err => {
       console.log('Erro ao editar usuário', err);
     }
   }
 
-  atualizarFuncionario(){
-    if(this.funcionario.Cod_Setor == this.setorMedico.Cod_Setor){
+  atualizarFuncionario() {
+    if (this.funcionario.Cod_Setor === this.setorMedico.Cod_Setor) {
       this.funcionario.Medico = 1;
-    }else{
+    } else {
       this.funcionario.Medico = 0;
     }
     this.employeeService.atualizarFuncionario(this.funcionario).subscribe( res => {
-      console.log("funcionao", this.funcionario);
-      if(this.funcionario.Medico == 1){
+      console.log('funcionario', this.funcionario);
+      if(this.funcionario.Medico === 1) {
         console.log('patch medico', this.medico);
         this.employeeService.atualizarMedico(this.medico).subscribe(medico => {
           this.medico = new DoctorModel();
@@ -114,23 +123,24 @@ export class EmployeeComponent implements OnInit {
       this.EditandoFuncionario = !this.EditandoFuncionario;
       this.funcionario = new EmployeeModel();
       this.listarFuncionarios();
-    }), err =>{
+    // tslint:disable-next-line: no-unused-expression
+    }), err => {
       console.log('Erro ao atualizar funcionário', err);
       alert('Erro ao atualizar funcionário!');
     }
   }
 
-  cancelarEdicao(){
+  cancelarEdicao() {
     this.EditandoFuncionario = false;
     this.funcionario = new EmployeeModel();
     this.medico = new DoctorModel();
   }
 
-  removerFuncionario(Cod_Funcionario){
+  removerFuncionario(Cod_Funcionario) {
     this.employeeService.deletarFuncionario(Cod_Funcionario).subscribe( res => {
       this.listarFuncionarios();
     })
-    alert("Usuário removido!");    
+    alert('Usuário removido!');
   }
 
   toggleFuncionario() {
