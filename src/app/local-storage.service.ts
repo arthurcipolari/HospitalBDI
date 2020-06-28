@@ -30,4 +30,8 @@ export class LocalStorageService {
     return this.http.get('http://localhost:3333/hospital');
   }
 
+  getHospital(Cod_Hospital): Observable<any> {
+    return this.http.get('http://localhost:3333/hospital/' + Cod_Hospital);
+  }
+
 }

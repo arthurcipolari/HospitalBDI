@@ -9,10 +9,12 @@ import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { EmployeeComponent } from '../../employee/employee.component';
+import { SectorComponent } from '../../sector/sector.component';
+
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: HomeComponent },
-    { path: 'user',           component: UserComponent },
+    { path: 'sector',           component: SectorComponent },
     { path: 'employee',           component: EmployeeComponent },
     { path: 'table',          component: TablesComponent },
     { path: 'typography',     component: TypographyComponent },

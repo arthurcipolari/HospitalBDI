@@ -47,10 +47,6 @@ export class EmployeeService {
     return this.http.patch('http://localhost:3333/doctor/' + medico.Cod_Funcionario, medico);
   }
 
-  listarSetores(Cod_Hospital): Observable<any> {
-    return this.http.get('http://localhost:3333/hospital/' + Cod_Hospital + '/sector');
-  }
-
   listarFuncionarioHospital(Cod_Hospital): Observable<any> {
   return this.http.get('http://localhost:3333/hospital/' + Cod_Hospital + '/employee');
   }

@@ -4,6 +4,7 @@ import { DoctorModel } from './doctor.model';
 import { EmployeeService } from 'app/employee.service';
 import { DatePipe } from '@angular/common';
 import { LocalStorageService } from 'app/local-storage.service';
+import { SectorService } from 'app/sector.service';
 
 declare var $: any;
 
@@ -23,15 +24,25 @@ export class EmployeeComponent implements OnInit {
   data: string;
   public setorMedico: any;
   editandoNewMedico;
+  nomeHospital: any;
 
   AddFuncionario = false;
   EditandoFuncionario = false;
 
-  constructor(private employeeService: EmployeeService, public datepipe: DatePipe, private localStorage: LocalStorageService) { }
+  constructor(private employeeService: EmployeeService, public datepipe: DatePipe, private localStorage: LocalStorageService,
+     private sectorService: SectorService) { }
 
   ngOnInit(): void {
+    this.getHospitalName();
     this.listarSetores();
     this.listarFuncionarios();
+  }
+
+  getHospitalName() {
+    const codHosp = this.localStorage.get('selectedHospital');
+    this.localStorage.getHospital(codHosp).subscribe(hospital => {
+      this.nomeHospital = hospital[0].Nome;
+    })
   }
 
   adicionarFuncionario() {
@@ -64,18 +75,24 @@ export class EmployeeComponent implements OnInit {
   }
 
   listarSetores() {
+    console.log('inicio lista setores');
     const codHosp = this.localStorage.get('selectedHospital');
-    this.employeeService.listarSetores(codHosp).subscribe(setores => {
+    this.sectorService.listarSetores(codHosp).subscribe(setores => {
       console.log(setores);
       this.setores = setores;
       function getSetorByFind(nome) {
         return setores.find(x => x.Nome_Setor === nome);
       }
       this.setorMedico = getSetorByFind('Médico');
+      if (this.setorMedico == undefined) {
+        console.log('fix setor', this.setorMedico);
+        this.setorMedico = { Cod_Setor: '-1', Nome_Setor: 'Não existem setores médicos cadastrados'};
+        console.log('fixed', this.setorMedico);
+      }
       if (!this.setores.length) {
         const empty = {Cod_Setor: '0', Nome_Setor: 'Não existem setores cadastrados', Cod_Hospital: codHosp};
         this.setores.push(empty);
-        this.setorMedico = 0;
+        this.setorMedico.Cod_Setor = 0;
       }
     }, err => {
       console.log('Erro ao listar setores', err);

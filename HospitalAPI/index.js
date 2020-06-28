@@ -42,27 +42,27 @@ app.use('/', router);
 
 
 // rotas de clientes
-// rota para listar todos clientes
+// rota para listar todos hospitais
 router.get('/hospital', (req, res) =>{
     execSQLQuery('SELECT * FROM Hospital', res);
 })
-// rota para listar cliente por id
+// rota para listar hospital por id
 router.get('/hospital/:Cod_Hospital?', (req, res) =>{
     let filter = '';
     if(req.params.Cod_Hospital) filter = ' WHERE Cod_Hospital=' + parseInt(req.params.Cod_Hospital);
     execSQLQuery('SELECT * FROM Hospital' + filter, res);
 })
-// rota para deletar um cliente por id
+// rota para deletar um hospital por id
 router.delete('/hospital/:Cod_Hospital', (req, res) =>{
     execSQLQuery('DELETE FROM Hospital WHERE Cod_Hospital=' + parseInt(req.params.Cod_Hospital), res);
 })
-// rota para criar um novo cliente
+// rota para criar um novo hospital
 router.post('/hospital', (req, res) =>{
     const Nome = req.body.Nome.substring(0,254);
     const Endereco = req.body.Endereco.substring(0,254);
     execSQLQuery(`INSERT INTO Hospital(Nome, Endereco) VALUES('${Nome}','${Endereco}')`, res);
 });
-// rota para atualizar um cliente
+// rota para atualizar um hospital
 router.patch('/hospital/:Cod_Hospital', (req, res) =>{
     const Cod_Hospital = parseInt(req.params.Cod_Hospital);
     const Nome = req.body.Nome.substring(0,254);
