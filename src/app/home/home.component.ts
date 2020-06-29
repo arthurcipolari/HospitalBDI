@@ -12,6 +12,7 @@ export class HomeComponent implements OnInit {
   hospitais: any;
   selectedHospital;
   nomeHospital;
+  internacoes: any;
 
   constructor(private localStorage: LocalStorageService) {}
 
@@ -48,4 +49,5 @@ export class HomeComponent implements OnInit {
         console.log('Erro ao listar hospitais', err);
       })
     }
+
 }

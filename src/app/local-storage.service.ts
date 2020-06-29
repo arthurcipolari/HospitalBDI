@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { HospitalizationModel } from './hospitalization/hospitalization.model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,30 @@ export class LocalStorageService {
 
   getHospital(Cod_Hospital): Observable<any> {
     return this.http.get('http://localhost:3333/hospital/' + Cod_Hospital);
+  }
+
+  getPatients(): Observable<any> {
+    return this.http.get('http://localhost:3333/patients')
+  }
+
+  getDoctors(Cod_Hospital): Observable<any> {
+    return this.http.get('http://localhost:3333/hospital/' + Cod_Hospital + '/doctors')
+  }
+
+  getRooms(Cod_Hospital): Observable<any> {
+    return this.http.get('http://localhost:3333/hospital/' + Cod_Hospital + '/rooms')
+  }
+
+  getHospitalizations(Cod_Hospital): Observable<any> {
+    return this.http.get('http://localhost:3333/hospital/' + Cod_Hospital + '/hospitalizations')
+  }
+
+  registrarAlta(Cod_Paciente, Data_Alta): Observable<any> {
+    return this.http.patch('http://localhost:3333/hospitalization/' + Cod_Paciente, Data_Alta)
+  }
+
+  registrarInternacao(internacao: HospitalizationModel): Observable<any> {
+    return this.http.post('http://localhost:3333/hospitalization/', internacao)
   }
 
 }

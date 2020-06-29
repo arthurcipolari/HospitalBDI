@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { SectorComponent } from './sector/sector.component';
+import { HospitalizationComponent } from './hospitalization/hospitalization.component';
 
 import { EmployeeService } from './employee.service';
 import { LocalStorageService } from './local-storage.service';
@@ -35,7 +36,8 @@ import { SectorService } from './sector.service';
     AppComponent,
     AdminLayoutComponent,
     EmployeeComponent,
-    SectorComponent
+    SectorComponent,
+    HospitalizationComponent
   ],
   providers: [HttpClientModule, DatePipe, EmployeeService, LocalStorageService, SectorService],
   bootstrap: [AppComponent]

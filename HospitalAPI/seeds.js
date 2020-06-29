@@ -1,5 +1,4 @@
 const mysql      = require('mysql');
-const step = require('./step');
 const connection = mysql.createConnection({
   host     : 'localhost',
   port     : 3306,

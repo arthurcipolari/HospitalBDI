@@ -41,7 +41,10 @@ router.get('/', (req, res) => res.json({ message: 'API ONLINE!' }));
 app.use('/', router);
 
 
-// rotas de clientes
+//---------------------------------
+//------------HOSPITAIS------------
+//---------------------------------
+
 // rota para listar todos hospitais
 router.get('/hospital', (req, res) =>{
     execSQLQuery('SELECT * FROM Hospital', res);
@@ -70,7 +73,10 @@ router.patch('/hospital/:Cod_Hospital', (req, res) =>{
     execSQLQuery(`UPDATE Hospital SET Nome='${Nome}', Endereco='${Endereco}' WHERE ID=${Cod_Hospital}`, res);
 })
 
-// rotas de setores
+//-------------------------------
+//------------SETORES------------
+//-------------------------------
+
 // rota para listar todos setores
 router.get('/hospital/:Cod_Hospital/sector', (req, res) =>{
   execSQLQuery('SELECT * FROM Sector WHERE Cod_Hospital=' + parseInt(req.params.Cod_Hospital), res);
@@ -99,7 +105,10 @@ router.patch('/hospital/:Cod_Hospital/sector/:Cod_Setor', (req, res) =>{
   execSQLQuery(`UPDATE Sector SET Cod_Hospital='${Cod_Hospital}', Nome_Setor='${Nome_Setor}' WHERE Cod_Setor=${Cod_Setor}`, res);
 })
 
-// rotas de funcionarios
+//-----------------------------------
+//------------FUNCIONARIO------------
+//-----------------------------------
+
 // rota para listar todos funcionarios
 router.get('/employee', (req, res) =>{
   execSQLQuery('SELECT * FROM Employee', res);
@@ -141,6 +150,10 @@ router.get('/hospital/:Cod_Hospital/employee', (req, res) => {
   execSQLQuery('SELECT e.Cod_Funcionario, e.Nome, e.Data_Admissao, e.Cod_Setor, d.CRM, d.Especialidade, s.Nome_Setor FROM Employee e JOIN Sector s ON e.Cod_Setor = s.Cod_Setor LEFT JOIN Doctor d ON e.Cod_Funcionario = d.Cod_Funcionario WHERE Cod_Hospital =' + parseInt(req.params.Cod_Hospital) + ' ORDER BY e.Nome', res);
 })
 
+//------------------------------
+//------------MEDICO------------
+//------------------------------
+
 //rota cria medico
 router.post('/employee/:Cod_Funcionario/doctor', (req, res) =>{
   const CRM = req.body.CRM;
@@ -160,4 +173,56 @@ router.patch('/doctor/:Cod_Funcionario', (req, res) =>{
   const Especialidade = req.body.Especialidade.substring(0,254);
   const Cod_Funcionario = parseInt(req.params.Cod_Funcionario);
   execSQLQuery(`UPDATE Doctor SET CRM='${CRM}', Especialidade='${Especialidade}' WHERE Cod_Funcionario=${Cod_Funcionario}`, res);
+})
+
+//---------------------------------------------------
+//------------ROTAS PARA CRIAR INTERNAÇÃO------------
+//---------------------------------------------------
+
+//rota listar paciente
+router.get('/patients', (req, res) => {
+  execSQLQuery(`SELECT * FROM patient WHERE Cod_Paciente NOT IN ( SELECT Cod_Paciente FROM hospitalization WHERE Data_Alta IS NULL )`, res)
+})
+//rota lista medico
+router.get('/hospital/:Cod_Hospital/doctors', (req, res) => {
+  execSQLQuery('SELECT e.Cod_Funcionario, e.Nome, d.Especialidade FROM Employee e JOIN Sector s ON e.Cod_Setor = s.Cod_Setor INNER JOIN Doctor d ON e.Cod_Funcionario = d.Cod_Funcionario WHERE Cod_Hospital =' + parseInt(req.params.Cod_Hospital) + ' ORDER BY e.Nome', res);
+})
+//rota listar quartos livres
+router.get('/hospital/:Cod_Hospital/rooms', (req, res) => {
+  const Cod_Hospital = parseInt(req.params.Cod_Hospital);
+  execSQLQuery('SELECT * FROM room r JOIN sector s ON r.Cod_Setor = s.Cod_Setor WHERE s.Cod_Hospital ='+ Cod_Hospital + ' AND r.Em_Uso = 0', res)
+})
+//rota lista internações
+router.get('/hospital/:Cod_Hospital/hospitalizations', (req, res) => {
+  const Cod_Hospital = parseInt(req.params.Cod_Hospital);
+  execSQLQuery('SELECT h.Cod_Internacao, p.Nome AS Paciente, e.Nome AS Medico, r.Nome_Quarto AS Quarto, s.Nome_Setor AS Localizacao, i.Nome_Convenio AS PlanoSaude,'+
+  ' h.Data_Internacao AS Internacao, h.Data_Alta AS Alta FROM hospitalization h '+ 
+  'JOIN room r ON h.Cod_Quarto = r.Cod_Quarto '+ 
+  'JOIN sector s ON r.Cod_Setor = s.Cod_Setor '+
+  'JOIN patient p ON h.Cod_Paciente = p.Cod_Paciente '+
+  'JOIN employee e ON h.Cod_Medico =  e.Cod_Funcionario '+
+  'JOIN insurance i ON p.Cod_Convenio = i.Cod_Convenio '+
+  'WHERE Cod_Hospital = '+ Cod_Hospital, res)
+})
+//rota cria internação
+router.post('/hospitalization/', (req, res) => {
+  const Cod_Paciente = req.body.Cod_Paciente;
+  const Cod_Medico = req.body.Cod_Medico;
+  const Cod_Quarto = req.body.Cod_Quarto;
+  if(req.body.Data_Internacao){
+    var Data_Internacao = new Date(req.body.Data_Internacao).toISOString().replace(/\T.+/, '');
+  }else{
+    var Data_Internacao = new Date().toISOString().replace(/\T.+/, '');
+  }    
+  execSQLQuery(`INSERT INTO hospitalization(Cod_Paciente, Cod_Medico, Cod_Quarto, Data_Internacao) VALUES('${Cod_Paciente}','${Cod_Medico}','${Cod_Quarto}','${Data_Internacao}')`, res)
+})
+//rota finaliza internação
+router.patch('/hospitalization/:Cod_Internacao', (req, res) => {
+  const Cod_Internacao = parseInt(req.params.Cod_Internacao);
+  if(req.body.Data_Alta){
+    var Data_Alta = new Date(req.body.Data_Alta).toISOString().replace(/\T.+/, '');
+  }else{
+    var Data_Alta = new Date().toISOString().replace(/\T.+/, '');
+  }
+  execSQLQuery(`UPDATE hospitalization SET Data_Alta = '${Data_Alta}' WHERE hospitalization.Cod_Internacao = '${Cod_Internacao}'`, res)
 })

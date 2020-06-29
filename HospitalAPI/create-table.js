@@ -164,7 +164,7 @@ function tabelaReservation(connection){
   "KEY Cod_Paciente (Cod_Paciente),\n"+
   "KEY Cod_Quarto (Cod_Quarto),\n"+
   "CONSTRAINT Reservation_ibfk_1 FOREIGN KEY (Cod_Paciente) REFERENCES Patient (Cod_Paciente) ON DELETE CASCADE ON UPDATE CASCADE,\n"+
-  "CONSTRAINT Reservation_ibfk_2 FOREIGN KEY (Cod_Quarto) REFERENCES Room (Cod_Quarto) ON DELETE CASCADE ON UPDATE CASCADE\n"+
+  "CONSTRAINT Reservation_ibfk_2 FOREIGN KEY (Cod_Quarto) REFERENCES Room (Cod_Quarto) ON DELETE RESTRICT ON UPDATE CASCADE\n"+
   ");";
 
   let msg = 'criou a tabela reserva!';
@@ -185,8 +185,8 @@ function tabelaHospitalization(connection){
   "KEY Cod_Medico (Cod_Medico),\n"+
   "KEY Cod_Quarto (Cod_Quarto),\n"+
   "CONSTRAINT Hospitalization_ibfk_1 FOREIGN KEY (Cod_Paciente) REFERENCES Patient (Cod_Paciente) ON DELETE RESTRICT ON UPDATE CASCADE,\n"+
-  "CONSTRAINT Hospitalization_ibfk_2 FOREIGN KEY (Cod_Medico) REFERENCES Doctor (Cod_Funcionario) ON DELETE SET NULL ON UPDATE CASCADE,\n"+
-  "CONSTRAINT Hospitalization_ibfk_3 FOREIGN KEY (Cod_Quarto) REFERENCES Room (Cod_Quarto) ON DELETE CASCADE ON UPDATE CASCADE\n"+
+  "CONSTRAINT Hospitalization_ibfk_2 FOREIGN KEY (Cod_Medico) REFERENCES Doctor (Cod_Funcionario) ON DELETE RESTRICT ON UPDATE CASCADE,\n"+
+  "CONSTRAINT Hospitalization_ibfk_3 FOREIGN KEY (Cod_Quarto) REFERENCES Room (Cod_Quarto) ON DELETE RESTRICT ON UPDATE CASCADE\n"+
   ");";
 
   let msg = 'criou a tabela internacao!';

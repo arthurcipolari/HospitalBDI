@@ -65,8 +65,16 @@ export class SectorComponent implements OnInit {
   removerSetor(setor) {
     this.sectorService.deletarSetor(setor).subscribe( res => {
       this.listarSetores();
+      if (res.errno == 1451) {
+        console.log('Erro ao remover setor!', res);
+        this.showDangerNotification('Erro ao remover setor!');
+      } else {
+        this.showDangerNotification('Setor removido!');
+      }
+    }, err => {
+      console.log('Erro ao remover setor!', err);
+      this.showDangerNotification('Erro ao remover setor!');
     })
-    this.showDangerNotification('Setor removido!');
   }
 
 

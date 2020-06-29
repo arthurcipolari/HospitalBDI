@@ -10,16 +10,12 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { EmployeeComponent } from '../../employee/employee.component';
 import { SectorComponent } from '../../sector/sector.component';
+import { HospitalizationComponent } from '../../hospitalization/hospitalization.component';
 
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: HomeComponent },
     { path: 'sector',           component: SectorComponent },
     { path: 'employee',           component: EmployeeComponent },
-    { path: 'table',          component: TablesComponent },
-    { path: 'typography',     component: TypographyComponent },
-    { path: 'icons',          component: IconsComponent },
-    { path: 'maps',           component: MapsComponent },
-    { path: 'notifications',  component: NotificationsComponent },
-    { path: 'upgrade',        component: UpgradeComponent },
+    { path: 'hospitalization',          component: HospitalizationComponent }
 ];

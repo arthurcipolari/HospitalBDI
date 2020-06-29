@@ -47,10 +47,8 @@ export class EmployeeComponent implements OnInit {
 
   adicionarFuncionario() {
     if (this.funcionario.Cod_Setor == this.setorMedico.Cod_Setor) {
-      console.log('medico', this.funcionario, this.setorMedico);
       this.funcionario.Medico = 1;
     } else {
-      console.log('not medico', this.funcionario, this.setorMedico);
       this.funcionario.Medico = 0;
     }
     this.employeeService.adicionarFuncionario(this.funcionario).subscribe(funcionario => {
@@ -75,19 +73,15 @@ export class EmployeeComponent implements OnInit {
   }
 
   listarSetores() {
-    console.log('inicio lista setores');
     const codHosp = this.localStorage.get('selectedHospital');
     this.sectorService.listarSetores(codHosp).subscribe(setores => {
-      console.log(setores);
       this.setores = setores;
       function getSetorByFind(nome) {
         return setores.find(x => x.Nome_Setor === nome);
       }
       this.setorMedico = getSetorByFind('Médico');
       if (this.setorMedico == undefined) {
-        console.log('fix setor', this.setorMedico);
         this.setorMedico = { Cod_Setor: '-1', Nome_Setor: 'Não existem setores médicos cadastrados'};
-        console.log('fixed', this.setorMedico);
       }
       if (!this.setores.length) {
         const empty = {Cod_Setor: '0', Nome_Setor: 'Não existem setores cadastrados', Cod_Hospital: codHosp};
@@ -105,7 +99,6 @@ export class EmployeeComponent implements OnInit {
     const codHosp = this.localStorage.get('selectedHospital');
     this.employeeService.listarFuncionarioHospital(codHosp).subscribe(funcionarios => {
       this.funcionarios = funcionarios;
-      console.log(this.funcionarios);
     }, err => {
       console.log('Erro ao listar funcionarios', err);
       this.showDangerNotification('Erro ao listar funcionarios');
@@ -117,7 +110,6 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.editarFuncionario(Cod_Funcionario).subscribe(funcionario => {
       this.funcionario = funcionario[0];
       this.data = this.datepipe.transform (new Date(this.funcionario.Data_Admissao), 'yyyy-MM-dd');
-      console.log('funcionario EDIT', this.funcionario);
       this.editandoNewMedico = 1;
       if (this.funcionario.Medico) {
         this.editandoNewMedico = 0;
@@ -137,7 +129,6 @@ export class EmployeeComponent implements OnInit {
     if (this.funcionario.Cod_Setor == this.setorMedico.Cod_Setor) {
       this.funcionario.Medico = 1;
       if (this.editandoNewMedico) {
-        console.log('New médico', this.medico, this. funcionario);
         this.employeeService.fixMedico(this.medico, this.funcionario).subscribe(medico => {
         }, err => {
           console.log('Erro ao cadastrar médico', err);
@@ -147,11 +138,8 @@ export class EmployeeComponent implements OnInit {
     } else {
       this.funcionario.Medico = 0;
     }
-    console.log('AAAAAA', this.funcionario);
     this.employeeService.atualizarFuncionario(this.funcionario).subscribe( res => {
-      console.log('AAAAAAfuncionario', this.funcionario);
       if (this.funcionario.Medico === 1) {
-        console.log('patch medico', this.medico);
         this.employeeService.atualizarMedico(this.medico).subscribe(medico => {
           this.medico = new DoctorModel();
           this.listarFuncionarios();
