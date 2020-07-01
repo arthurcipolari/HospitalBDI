@@ -16,7 +16,7 @@
 ### Install and run Front-End
 
 1. Open Terminal
-2. Go to your file project
+2. Go to your HospitalBDI folder
 3. Run in terminal: ```npm install -g @angular/cli```
 4. Then: ```npm install```
 5. And: ```ng serve```
