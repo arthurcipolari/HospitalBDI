@@ -196,7 +196,7 @@ function tabelaHospitalization(connection){
 function triggerHospitalization(connection){
 
   const sql = "CREATE TRIGGER `hospitalization_AFTER_INSERT` AFTER INSERT ON Hospitalization FOR EACH ROW\n"+
-   "BEGIN UPDATE room SET Em_Uso = 1 WHERE room.Cod_Quarto = new.Cod_Quarto; END";
+   "BEGIN UPDATE Room SET Em_Uso = 1 WHERE Room.Cod_Quarto = new.Cod_Quarto; END";
 
   connection.query(sql, function (error, results, fields){
     if(error) return console.log(error);
@@ -204,7 +204,7 @@ function triggerHospitalization(connection){
   });
 
   const sql2 = "CREATE TRIGGER `hospitalization_AFTER_UPDATE` AFTER UPDATE ON Hospitalization FOR EACH ROW\n"+
-  "BEGIN IF NEW.Data_Alta IS NOT NULL THEN UPDATE room SET Em_Uso = 0 WHERE room.Cod_Quarto = old.Cod_Quarto; END IF; END";
+  "BEGIN IF NEW.Data_Alta IS NOT NULL THEN UPDATE Room SET Em_Uso = 0 WHERE Room.Cod_Quarto = old.Cod_Quarto; END IF; END";
 
   connection.query(sql2, function (error, results, fields){
     if(error) return console.log(error);
