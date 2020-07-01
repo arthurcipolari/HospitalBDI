@@ -196,12 +196,12 @@ router.get('/hospital/:Cod_Hospital/rooms', (req, res) => {
 router.get('/hospital/:Cod_Hospital/hospitalizations', (req, res) => {
   const Cod_Hospital = parseInt(req.params.Cod_Hospital);
   execSQLQuery('SELECT h.Cod_Internacao, p.Nome AS Paciente, e.Nome AS Medico, r.Nome_Quarto AS Quarto, s.Nome_Setor AS Localizacao, i.Nome_Convenio AS PlanoSaude,'+
-  ' h.Data_Internacao AS Internacao, h.Data_Alta AS Alta FROM hospitalization h '+ 
-  'JOIN room r ON h.Cod_Quarto = r.Cod_Quarto '+ 
-  'JOIN sector s ON r.Cod_Setor = s.Cod_Setor '+
-  'JOIN patient p ON h.Cod_Paciente = p.Cod_Paciente '+
-  'JOIN employee e ON h.Cod_Medico =  e.Cod_Funcionario '+
-  'JOIN insurance i ON p.Cod_Convenio = i.Cod_Convenio '+
+  ' h.Data_Internacao AS Internacao, h.Data_Alta AS Alta FROM Hospitalization h '+ 
+  'JOIN Room r ON h.Cod_Quarto = r.Cod_Quarto '+ 
+  'JOIN Sector s ON r.Cod_Setor = s.Cod_Setor '+
+  'JOIN Patient p ON h.Cod_Paciente = p.Cod_Paciente '+
+  'JOIN Employee e ON h.Cod_Medico =  e.Cod_Funcionario '+
+  'JOIN Insurance i ON p.Cod_Convenio = i.Cod_Convenio '+
   'WHERE Cod_Hospital = '+ Cod_Hospital, res)
 })
 //rota cria internação
@@ -214,7 +214,7 @@ router.post('/hospitalization/', (req, res) => {
   }else{
     var Data_Internacao = new Date().toISOString().replace(/\T.+/, '');
   }    
-  execSQLQuery(`INSERT INTO hospitalization(Cod_Paciente, Cod_Medico, Cod_Quarto, Data_Internacao) VALUES('${Cod_Paciente}','${Cod_Medico}','${Cod_Quarto}','${Data_Internacao}')`, res)
+  execSQLQuery(`INSERT INTO Hospitalization(Cod_Paciente, Cod_Medico, Cod_Quarto, Data_Internacao) VALUES('${Cod_Paciente}','${Cod_Medico}','${Cod_Quarto}','${Data_Internacao}')`, res)
 })
 //rota finaliza internação
 router.patch('/hospitalization/:Cod_Internacao', (req, res) => {
@@ -224,5 +224,5 @@ router.patch('/hospitalization/:Cod_Internacao', (req, res) => {
   }else{
     var Data_Alta = new Date().toISOString().replace(/\T.+/, '');
   }
-  execSQLQuery(`UPDATE hospitalization SET Data_Alta = '${Data_Alta}' WHERE hospitalization.Cod_Internacao = '${Cod_Internacao}'`, res)
+  execSQLQuery(`UPDATE Hospitalization SET Data_Alta = '${Data_Alta}' WHERE Hospitalization.Cod_Internacao = '${Cod_Internacao}'`, res)
 })
