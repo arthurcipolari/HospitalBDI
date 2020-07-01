@@ -71,6 +71,8 @@ export class HospitalizationComponent implements OnInit {
   }
 
   registrarInternacao(internacao) {
+    console.log(internacao);
+    if (internacao.Cod_Paciente && internacao.Cod_Medico && internacao.Cod_Quarto) {
     this.localStorage.registrarInternacao(internacao).subscribe(internacao => {
       this.regInternacao = false;
       this.reload();
@@ -79,6 +81,9 @@ export class HospitalizationComponent implements OnInit {
       console.log('Erro ao registrar internação', err);
       this.showDangerNotification('Erro ao registrar internação');
     })
+  } else {
+    this.showDangerNotification('Preencha todos os campos!');
+  }
 
   }
 

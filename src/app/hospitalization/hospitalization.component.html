@@ -33,7 +33,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Quarto</label>
-                                        <select class="form-control" name="Cod_Setor" placeholder="Selecione o setor..." value="" [(ngModel)]="internacao.Cod_Quarto"> 
+                                        <select required class="form-control" name="Cod_Setor" placeholder="Selecione o setor..." value="" [(ngModel)]="internacao.Cod_Quarto"> 
                                         <option *ngFor="let quarto of quartos" value="{{quarto.Cod_Quarto}}">{{quarto.Nome_Quarto}}</option>
                                         </select>    
                                     </div>
@@ -70,7 +70,7 @@
                                         <th>Plano de Saúde</th>
                                         <th>Data Internação</th>
                                         <th>Data Alta</th>
-                                        <th>Ações</th>
+                                        <th style="text-align: center;">Registrar Alta</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -83,8 +83,11 @@
                                         <td>{{internacao.PlanoSaude}}</td>
                                         <td>{{internacao.Internacao | date:'dd/MM/yyyy'}}</td>
                                         <td>{{internacao.Alta | date:'dd/MM/yyyy'}}</td>
-                                        <td *ngIf="!internacao.Alta">
-                                            <span (click)="registrarAlta(internacao.Cod_Internacao)"><i style="padding-left: 15px; font-weight:bold; color: red;" class="pe-7s-trash"></i></span>
+                                        <td style="text-align: center;" *ngIf="!internacao.Alta">
+                                            <span (click)="registrarAlta(internacao.Cod_Internacao)"><i title="Registrar Alta" style="font-weight:bold; color: green;" class="pe-7s-check"></i></span>
+                                        </td>
+                                        <td style="text-align: center;" *ngIf="internacao.Alta">
+                                            <span>-</span>
                                         </td>
                                     </tr>
                                 </tbody>
