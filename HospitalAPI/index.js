@@ -181,7 +181,7 @@ router.patch('/doctor/:Cod_Funcionario', (req, res) =>{
 
 //rota listar paciente
 router.get('/patients', (req, res) => {
-  execSQLQuery(`SELECT * FROM patient WHERE Cod_Paciente NOT IN ( SELECT Cod_Paciente FROM hospitalization WHERE Data_Alta IS NULL )`, res)
+  execSQLQuery(`SELECT * FROM Patient WHERE Cod_Paciente NOT IN ( SELECT Cod_Paciente FROM Hospitalization WHERE Data_Alta IS NULL )`, res)
 })
 //rota lista medico
 router.get('/hospital/:Cod_Hospital/doctors', (req, res) => {
