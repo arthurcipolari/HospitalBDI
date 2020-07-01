@@ -202,7 +202,7 @@ router.get('/hospital/:Cod_Hospital/hospitalizations', (req, res) => {
   'JOIN Patient p ON h.Cod_Paciente = p.Cod_Paciente '+
   'JOIN Employee e ON h.Cod_Medico =  e.Cod_Funcionario '+
   'JOIN Insurance i ON p.Cod_Convenio = i.Cod_Convenio '+
-  'WHERE Cod_Hospital = '+ Cod_Hospital, res)
+  'WHERE Cod_Hospital = '+ Cod_Hospital + ' ORDER BY Internacao desc, Paciente', res)
 })
 //rota cria internação
 router.post('/hospitalization/', (req, res) => {

@@ -62,7 +62,7 @@ export class HospitalizationComponent implements OnInit {
 
   registrarAlta(Cod_Internacao) {
     const Data_Alta = this.datepipe.transform (new Date(), 'yyyy-MM-dd');
-    this.localStorage.registrarAlta(Cod_Internacao, Data_Alta).subscribe(internacao => {
+    this.localStorage.registrarAlta(Cod_Internacao, Data_Alta).subscribe(x => {
     this.reload();
     }, err => {
       console.log('Erro ao registrar alta', err);
@@ -71,7 +71,6 @@ export class HospitalizationComponent implements OnInit {
   }
 
   registrarInternacao(internacao) {
-    console.log(internacao);
     if (internacao.Cod_Paciente && internacao.Cod_Medico && internacao.Cod_Quarto) {
     this.localStorage.registrarInternacao(internacao).subscribe(internacao => {
       this.regInternacao = false;
@@ -95,15 +94,15 @@ export class HospitalizationComponent implements OnInit {
   }
 
   reload() {
+    this.internacao = new HospitalizationModel;
     this.listarPacientes();
     this.listarMedicos();
     this.listarQuartos();
     this.listarInternacoes();
-    this.internacao = new HospitalizationModel;
   }
 
   toggleInternacao() {
-    this.internacao = new HospitalizationModel();
+    this.internacao = new HospitalizationModel;
     this.regInternacao = !this.regInternacao;
   }
 
