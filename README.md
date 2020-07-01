@@ -6,10 +6,11 @@
 4. Insert your MySQL user and password on script pages ( For MySQL 8.0 must use legacy authentication for new method use empty password ONLY )
 5. Go to HospitalAPI folder
 6. Open Terminal
-7. To create tables (if first time running) run: ```node create-table.js```
-8. For adding seeds run: ```node seeds.js```
-9. With tables created run: ```node index.js```
-10. API Running on `http://localhost:3333`
+7. To install dependencies run: ```npm install```
+8. To create tables (if first time running) run: ```node create-table.js```
+9. For adding seeds run: ```node seeds.js```
+10. With tables created run: ```node index.js```
+11. API Running on `http://localhost:3333`
 
 
 ### Install and run Front-End
